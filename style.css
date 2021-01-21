@@ -1,0 +1,17 @@
+td {
+  border-radius: 10%;
+  background-color: aqua;
+  font-size: 20px;
+  height: 40px;
+  width: auto;
+}
+th {
+  border-radius: 20%;
+  background-color: rgb(4, 173, 173);
+  font-size: 20px;
+  height: 40px;
+  width: auto;
+}
+table {
+  text-align: center;
+}
