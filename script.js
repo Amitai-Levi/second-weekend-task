@@ -1,3 +1,26 @@
+//function that adds a new element
+function addRow() {
+  const topic = document.getElementById("topic").value;
+  const start = document.getElementById("start").value;
+  const end = document.getElementById("end").value;
+  const recieved = document.getElementById("recievedTasks").value;
+  const done = document.getElementById("doneTasks").value;
+
+  let newElement = {
+    startedAt: new Date("2021-01-20:" + start),
+
+    finishedAt: new Date("2021-01-20:" + end),
+
+    tasksGiven: recieved,
+
+    tasksFinished: done,
+
+    topic: topic,
+  };
+  elementArray.push(newElement);
+  document.write('<link rel="stylesheet" href="style.css" />');
+  table();
+}
 //data construction
 let elementArray = [
   {
@@ -111,7 +134,31 @@ let elementArray = [
     topic: "Introduction",
   },
 ];
+table();
 function table() {
+  //form construction
+  document.write('<h1 class="formTitle">Add Row</h1>');
+  document.write("<form onsubmit='addRow()'>");
+
+  document.write(
+    '<input type="text" placeholder="Topic" name="topic" id="topic" required />'
+  );
+  document.write(
+    '<input type="time" placeholder="Start Time" name="" id="start" required />'
+  );
+  document.write(
+    '<input type="time" placeholder="End Time" name="" id="end" required />'
+  );
+  document.write(
+    '<input type="number" placeholder="Recieved Tasks" name="" id="recievedTasks" required />'
+  );
+  document.write(
+    '<input type="number" placeholder="Completed Tasks" name="" id="doneTasks" required />'
+  );
+  document.write('<button type="submit">Add Row</button>');
+
+  document.write("</form>");
+
   // a loop that calculates the 2 extra properties:
   for (const element of elementArray) {
     element["Total Time Spent"] = element.finishedAt - element.startedAt;
