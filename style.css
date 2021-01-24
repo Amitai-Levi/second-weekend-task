@@ -1,17 +1,22 @@
 td {
-  border-radius: 10%;
+  border-radius: 5px;
   background-color: aqua;
   font-size: 20px;
   height: 40px;
   width: auto;
+  margin-left: 15px;
 }
 th {
-  border-radius: 20%;
+  border-radius: 5px;
   background-color: rgb(4, 173, 173);
   font-size: 20px;
   height: 40px;
   width: auto;
+  padding: 0px 10px 0px 10px;
+}
+body {
+  text-align: center;
 }
 table {
-  text-align: center;
+  margin: auto;
 }
