@@ -249,22 +249,6 @@ function toTime(mili) {
 const timeList = document.querySelectorAll(".time");
 for (const timeCell of timeList) {
   colorMyCell(timeCell, 2, 5, 8);
-  // let cellValue = parseInt(timeCell.textContent);
-  // switch (true) {
-  //   case cellValue <= 2:
-  //     timeCell.style.backgroundColor = "green";
-  //     break;
-  //   case cellValue > 2 && cellValue <= 5:
-  //     timeCell.style.backgroundColor = "yellow";
-  //     break;
-
-  //   case cellValue > 5 && cellValue <= 8:
-  //     timeCell.style.backgroundColor = "orange";
-  //     break;
-
-  //   default:
-  //     timeCell.style.backgroundColor = "red";
-  // }
 }
 
 // making the column "TaskFinishePercent" colorful
