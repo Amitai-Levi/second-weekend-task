@@ -1,8 +1,7 @@
 "use strict";
-let elementArray = [];
-//data construction
 tableConst();
 function tableConst(newElement = null) {
+  //data construction
   let elementArray = [
     {
       "started At": new Date("2021-01-20:13:00"),
@@ -138,7 +137,7 @@ function tableConst(newElement = null) {
   topic.placeholder = "Topic";
   topic.id = "Topic";
   topic.required = true;
-  topic.value = "ds";
+  topic.focus();
   form.appendChild(topic);
 
   const strt = document.createElement("input");
@@ -170,8 +169,9 @@ function tableConst(newElement = null) {
   form.appendChild(comp);
 
   const btn = document.createElement("button");
-  btn.type = "submit";
+  btn.type = "button";
   btn.innerText = "Add row";
+  btn.setAttribute("onclick", "addRow()");
   form.appendChild(btn);
 
   // a loop that calculates the 2 extra properties:
@@ -243,50 +243,52 @@ function pad0(num) {
 
 //the following function turn miliseconds to hours
 function toTime(mili) {
-  //   let hour = Math.floor(mili / 3600000);
-  //   let minutes = (mili % 3600000) / 60000;
-  //   return pad0(hour) + ":" + pad0(minutes);
   return Math.floor(mili / 36000) / 100;
 }
 // making the column "Total time spent" colorful
 const timeList = document.querySelectorAll(".time");
 for (const timeCell of timeList) {
-  let cellValue = parseInt(timeCell.textContent);
-  switch (true) {
-    case cellValue <= 2:
-      timeCell.style.backgroundColor = "green";
-      break;
-    case cellValue > 2 && cellValue <= 5:
-      timeCell.style.backgroundColor = "yellow";
-      break;
+  colorMyCell(timeCell, 2, 5, 8);
+  // let cellValue = parseInt(timeCell.textContent);
+  // switch (true) {
+  //   case cellValue <= 2:
+  //     timeCell.style.backgroundColor = "green";
+  //     break;
+  //   case cellValue > 2 && cellValue <= 5:
+  //     timeCell.style.backgroundColor = "yellow";
+  //     break;
 
-    case cellValue > 5 && cellValue <= 8:
-      timeCell.style.backgroundColor = "orange";
-      break;
+  //   case cellValue > 5 && cellValue <= 8:
+  //     timeCell.style.backgroundColor = "orange";
+  //     break;
 
-    default:
-      timeCell.style.backgroundColor = "red";
-  }
+  //   default:
+  //     timeCell.style.backgroundColor = "red";
+  // }
 }
 
 // making the column "TaskFinishePercent" colorful
 const precentList = document.querySelectorAll(".precent");
 for (const precentCell of precentList) {
-  let presentCellValue = parseInt(precentCell.textContent);
+  colorMyCell(precentCell, 20, 50, 80);
+}
+// function that colors a cell by it's range according to the given values
+function colorMyCell(cell, small, medium, large) {
+  const value = parseInt(cell.textContent);
   switch (true) {
-    case presentCellValue <= 20:
-      precentCell.style.backgroundColor = "red";
+    case value <= small:
+      cell.style.backgroundColor = "red";
       break;
-    case presentCellValue > 20 && presentCellValue <= 50:
-      precentCell.style.backgroundColor = "orange";
+    case value > small && value <= medium:
+      cell.style.backgroundColor = "orange";
       break;
 
-    case presentCellValue > 50 && presentCellValue <= 80:
-      precentCell.style.backgroundColor = "yellow";
+    case value > medium && value <= large:
+      cell.style.backgroundColor = "yellow";
       break;
 
     default:
-      precentCell.style.backgroundColor = "green";
+      cell.style.backgroundColor = "green";
   }
 }
 
@@ -297,7 +299,6 @@ function addRow() {
   const end = document.getElementById("end").value;
   const recieved = document.getElementById("recievedTasks").value;
   const done = document.getElementById("doneTasks").value;
-
   let newElement = {
     "started At": new Date("2021-01-20:" + start),
 
@@ -314,91 +315,50 @@ function addRow() {
   newElement["Tasks Finished %"] = Math.floor(
     (newElement["Tasks Finished"] * 100) / newElement["Task Given"]
   );
-  let valuesForNewRow = [
-    start,
-    end,
-    recieved,
-    done,
-    Topic,
-    newElement["Total Time Spent"],
-    newElement["Tasks Finished %"],
-  ];
-  //elementArray.push(newElement);
 
-  //   const tableRow = document.createElement("tr");
-  //   const table = document.getElementById("table");
-  //   for (const prop in newElement) {
-  //     let rowItem = document.createElement("td");
-  //     switch (prop) {
-  //       case "started At":
-  //       case "Finished At":
-  //         rowItem.innerText =
-  //           pad0(newElement[prop].getHours()) +
-  //           ":" +
-  //           pad0(newElement[prop].getMinutes());
+  if (
+    newElement["Total Time Spent"] >= 0 &&
+    newElement["Tasks Finished %"] <= 100
+  ) {
+    const table = document.getElementById("table");
+    const tableRow = table.insertRow(table.rows.length);
+    let i = 0;
+    for (let prop in newElement) {
+      let rowItem = tableRow.insertCell(i);
+      switch (prop) {
+        case "started At":
+        case "Finished At":
+          rowItem.innerText =
+            pad0(newElement[prop].getHours()) +
+            ":" +
+            pad0(newElement[prop].getMinutes());
 
-  //         break;
-  //       case "Total Time Spent":
-  //         rowItem.innerText = toTime(newElement[prop]);
-  //         rowItem.className = "time";
-
-  //         break;
-  //       case "Tasks Finished %":
-  //         rowItem.innerText = newElement[prop] + "%";
-  //         rowItem.className = "precent";
-
-  //         break;
-  //       default:
-  //         rowItem.innerText = newElement[prop];
-  //     }
-  //     tableRow.appendChild(rowItem);
-  //   }
-  //   table.appendChild(tableRow);
-  //   document.body.append(table);
-  //   // css = document.newElement("link");
-  //   // css.rel = "stylesheet";
-  //   // css.href = "style.css";
-  //   // document.append(css);
-
-  //   // table();
-  // }
-  const table = document.getElementById("table");
-  const test = table.insertRow(table.rows.length);
-  for (let i = 0; i < valuesForNewRow.length; i++) {
-    let cell = test.insertCell(i);
-    cell.innerText = valuesForNewRow[i];
-  }
-  const tableRow = table.insertRow(table.rows.length);
-  let i = 0;
-  for (let prop in newElement) {
-    let rowItem = tableRow.insertCell(i);
-    switch (prop) {
-      case "started At":
-      case "Finished At":
-        rowItem.innerText =
-          pad0(newElement[prop].getHours()) +
-          ":" +
-          pad0(newElement[prop].getMinutes());
-
-        break;
-      case "Total Time Spent":
-        rowItem.innerText = toTime(newElement[prop]);
-        rowItem.className = "time";
-
-        break;
-      case "Tasks Finished %":
-        rowItem.innerText = newElement[prop] + "%";
-        rowItem.className = "precent";
-
-        break;
-      default:
-        rowItem.innerText = newElement[prop];
+          break;
+        case "Total Time Spent":
+          rowItem.innerText = toTime(newElement[prop]);
+          rowItem.className = "time";
+          colorMyCell(rowItem, 2, 5, 8);
+          break;
+        case "Tasks Finished %":
+          rowItem.innerText = newElement[prop] + "%";
+          rowItem.className = "precent";
+          colorMyCell(rowItem, 20, 50, 80);
+          break;
+        default:
+          rowItem.innerText = newElement[prop];
+      }
+      tableRow.appendChild(rowItem);
+      i++;
     }
-    tableRow.appendChild(rowItem);
-    i++;
+    table.appendChild(tableRow);
+  } else {
+    alert("You did something wrong, try again");
   }
-  table.appendChild(tableRow);
-  table.appendChild(test);
-
-  tableConst(newElement);
+  //reset the input values
+  document.getElementById("Topic").focus();
+  document.getElementById("Topic").value = "";
+  document.getElementById("start").value = "";
+  document.getElementById("end").value = "";
+  document.getElementById("recievedTasks").value = "";
+  document.getElementById("doneTasks").value = "";
 }
